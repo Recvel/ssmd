@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swaptrix — Instant Crypto Exchange</title>
+  <meta name="description" content="Exchange 1500+ cryptocurrencies instantly and hassle-free. No registration required." />
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+<!-- ═══════════════ HEADER ═══════════════ -->
+<header id="header">
+  <div class="page-container header-inner">
+    <a href="#" class="logo" onclick="showPage('home')">Swaptrix</a>
+    <nav class="nav-links" id="navLinks">
+      <a href="#" data-page="about" onclick="showPage('about')">About</a>
+      <a href="#" data-page="how-to-use" onclick="showPage('how-to-use')">How to use</a>
+      <a href="#" data-page="faq" onclick="showPage('faq')">FAQ</a>
+      <a href="#" data-page="affiliate" onclick="showPage('affiliate')">Affiliate</a>
+      <a href="#" data-page="contacts" onclick="showPage('contacts')">Contacts</a>
+    </nav>
+
+    <!-- Auth buttons (shown when logged out) -->
+    <div class="auth-buttons" id="authButtons">
+      <button class="btn-ghost" onclick="openAuth('signin')">Sign In</button>
+      <button class="btn-solid" onclick="openAuth('signup')">Create Account</button>
+    </div>
+
+    <!-- Profile widget (shown when logged in) -->
+    <div class="profile-widget" id="profileWidget" style="display:none">
+      <button class="profile-trigger" onclick="toggleProfileMenu()">
+        <div class="profile-info">
+          <span class="profile-name" id="profileName">Alex</span>
+          <span class="profile-balance">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2.5"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+            <span id="profileBalanceText">0.0234 BTC</span>
+          </span>
+        </div>
+        <div class="avatar" id="avatarFallback">A</div>
+      </button>
+      <div class="profile-dropdown" id="profileDropdown">
+        <div class="dropdown-item" onclick="showPage('dashboard'); closeProfileMenu()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Profile
+        </div>
+        <div class="dropdown-item">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2.5"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></svg>
+          Balance: <span id="dropdownBalance">0.0234 BTC</span>
+        </div>
+        <div class="dropdown-separator"></div>
+        <div class="dropdown-item destructive" onclick="logOut()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          Log Out
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ═══════════════ PAGE: HOME ═══════════════ -->
+<div id="page-home" class="page active">
+  <main class="hero-section">
+    <div class="page-container hero-grid">
+      <div class="hero-text">
+        <h1>Exchange 1500+ cryptocurrencies<br><span class="gradient-text">instantly &amp; hassle-free</span></h1>
+        <p class="hero-desc">Swaptrix is a fast and convenient service for exchanging cryptocurrency. Usability and user benefits are our top priorities. No registration required.</p>
+        <div class="badges">
+          <span class="badge">No Limits</span>
+          <span class="badge">Private &amp; Secure</span>
+          <span class="badge">No Sign-Up</span>
+        </div>
+      </div>
+      <div class="widget" id="exchangeWidget">
+        <label class="field-label">You send</label>
+        <div class="widget-field">
+          <div class="field-row">
+            <input type="number" id="sendAmount" value="0.1" />
+            <button class="coin-btn" onclick="openCoinModal('send')">
+              <img id="sendIcon" src="" alt="" />
+              <span id="sendTicker">BTC</span>
+              <span>▼</span>
+            </button>
+          </div>
+          <p class="rate-hint">1 BTC ~ 96,000 USD</p>
+        </div>
+        <div class="swap-row">
+          <div class="swap-btn" onclick="swapCoins()">↓</div>
+        </div>
+        <label class="field-label">You get (approximate)</label>
+        <div class="widget-field">
+          <div class="field-row">
+            <input type="text" value="~ 45000.00" readonly />
+            <button class="coin-btn" onclick="openCoinModal('get')">
+              <img id="getIcon" src="" alt="" />
+              <span id="getTicker">USDT</span>
+              <span>▼</span>
+            </button>
+          </div>
+        </div>
+        <button class="gradient-btn exchange-btn" onclick="alert('Переход на создание заявки...')">EXCHANGE NOW</button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Features -->
+  <section class="features-section">
+    <div class="page-container">
+      <h2 class="section-heading">We're Different</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">🚀</div>
+          <h3>Comfortable Interface</h3>
+          <p>We will exchange your funds in minutes due to the full automation.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">🔒</div>
+          <h3>Privacy of every swap</h3>
+          <p>Swaptrix is a crypto exchange without registration required. We don't store your data.</p>
+        </div>
+        <div class="feature-card">
+          <div class="feature-icon">💬</div>
+          <h3>Fast Support</h3>
+          <p>You will receive a detailed answer for any question 24/7.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ on home -->
+  <section class="faq-home-section">
+    <div class="page-container faq-container">
+      <h2 class="section-heading">FAQ</h2>
+      <div id="homeFaq"></div>
+    </div>
+  </section>
+</div>
+
+<!-- ═══════════════ PAGE: ABOUT ═══════════════ -->
+<div id="page-about" class="page">
+  <div class="page-container page-content">
+    <h1>About Swaptrix</h1>
+    <div class="text-content">
+      <p>Swaptrix is a next-generation cryptocurrency exchange platform designed for speed, privacy, and simplicity. We support over 1500+ cryptocurrencies and process exchanges in minutes.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-value">1500+</div><div class="stat-label">Cryptocurrencies</div></div>
+        <div class="stat-card"><div class="stat-value">2M+</div><div class="stat-label">Exchanges completed</div></div>
+        <div class="stat-card"><div class="stat-value">24/7</div><div class="stat-label">Support available</div></div>
+      </div>
+      <p>Our mission is to make cryptocurrency accessible to everyone. We believe in a future where financial freedom is available to all, regardless of location or background.</p>
+      <p>Founded in 2024, Swaptrix has grown to become one of the most trusted platforms for instant crypto exchanges. Our team of experienced blockchain developers and financial experts work tirelessly to ensure the best exchange rates and lightning-fast transactions.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: HOW TO USE ═══════════════ -->
+<div id="page-how-to-use" class="page">
+  <div class="page-container page-content">
+    <h1>How to Use</h1>
+    <p class="page-subtitle">Exchanging cryptocurrency with Swaptrix is simple and takes just a few steps. No registration required.</p>
+    <div class="steps-grid">
+      <div class="step-card"><div class="step-num">Step 01</div><h3>Choose your pair</h3><p>Select the cryptocurrency you want to send and the one you want to receive.</p></div>
+      <div class="step-card"><div class="step-num">Step 02</div><h3>Enter the amount</h3><p>Type in the amount you'd like to exchange. We'll show you the estimated amount you'll receive.</p></div>
+      <div class="step-card"><div class="step-num">Step 03</div><h3>Provide your wallet</h3><p>Enter the wallet address where you want to receive your exchanged cryptocurrency.</p></div>
+      <div class="step-card"><div class="step-num">Step 04</div><h3>Send &amp; receive</h3><p>Send your crypto to the provided address and receive your exchanged coins within minutes.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: FAQ ═══════════════ -->
+<div id="page-faq" class="page">
+  <div class="page-container page-content">
+    <h1>Frequently Asked Questions</h1>
+    <div class="faq-list" id="pageFaq"></div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: AFFILIATE ═══════════════ -->
+<div id="page-affiliate" class="page">
+  <div class="page-container page-content">
+    <h1>Affiliate Program</h1>
+    <div class="text-content">
+      <p>Earn passive income by referring users to Swaptrix. Our affiliate program rewards you for every successful exchange made through your referral link.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">💰</div><h3>Up to 50%</h3><p>Revenue share from each referral exchange</p></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><h3>Real-time</h3><p>Track your earnings in the dashboard 💸</p></div>
+        <div class="stat-card"><div class="stat-icon">💸</div><h3>Instant</h3><p>Withdrawals to your crypto wallet</p></div>
+      </div>
+      <p>Getting started is easy. Create an account, generate your unique referral link, and start sharing it with your audience. You'll earn a commission on every exchange made through your link.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: CONTACTS ═══════════════ -->
+<div id="page-contacts" class="page">
+  <div class="page-container page-content">
+    <h1>Contacts</h1>
+    <p class="page-subtitle">Have questions or need support? Reach out to us through any of the channels below. Our team is available 24/7 to help you.</p>
+    <div class="contacts-grid">
+      <div class="contact-card"><div class="contact-icon">📧</div><h3>Email</h3><p class="contact-value">support@swaptrix.io</p><p>We reply within 1 hour</p></div>
+      <div class="contact-card"><div class="contact-icon">💬</div><h3>Live Chat</h3><p class="contact-value">Available 24/7</p><p>Instant support on our platform</p></div>
+      <div class="contact-card"><div class="contact-icon">📱</div><h3>Telegram</h3><p class="contact-value">@swaptrix_support</p><p>Quick responses via Telegram</p></div>
+      <div class="contact-card"><div class="contact-icon">🐦</div><h3>Twitter / X</h3><p class="contact-value">@swaptrix</p><p>Follow us for updates</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════ PAGE: DASHBOARD ═══════════════ -->
+<div id="page-dashboard" class="page">
+  <div class="dashboard-layout">
+    <!-- Sidebar -->
+    <aside class="dashboard-sidebar">
+      <button class="sidebar-logo" onclick="showPage('home')" style="width:100%;border-bottom:1px solid var(--border);border-radius:0;border-left:none;border-top:none;border-right:none;">
+        <div class="sidebar-logo-icon">⚡</div>
+        <div>
+          <div class="sidebar-logo-name">Swaptrix</div>
+          <div class="sidebar-logo-sub">Affiliate program</div>
+        </div>
+      </button>
+      <nav class="sidebar-nav">
+        <button class="sidebar-item active" onclick="showDashTab('dashboard', this)">⊞ Dashboard</button>
+        <button class="sidebar-item" onclick="showDashTab('history', this)">⏱ History</button>
+        <button class="sidebar-item" onclick="showDashTab('integrate', this)">⚙ Integrate</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <button class="sidebar-item danger" onclick="logOut()">✕ Log out</button>
+        <button class="sidebar-item purple">⚡ Change Password</button>
+      </div>
+    </aside>
+
+    <!-- Dashboard tab -->
+    <main class="dashboard-main">
+      <div id="dash-tab-dashboard" class="dashboard-content">
+        <div style="display:flex;align-items:center;gap:12px">
+          <input class="db-search" placeholder="Search..." oninput="filterDashTransactions(this.value)" />
+          <button class="gradient-btn" style="padding:8px 16px;font-size:13px;border-radius:8px">📅 Select date</button>
+        </div>
+        <div class="db-stat-grid">
+          <div class="db-stat"><div class="db-stat-label">Actual balance</div><div class="db-stat-value">$0.00</div></div>
+          <div class="db-stat"><div class="db-stat-label">Earned month</div><div class="db-stat-value">$0.00</div></div>
+          <div class="db-stat-primary"><div class="db-stat-label">Earned total</div><div class="db-stat-value">$0.00</div></div>
+        </div>
+        <div class="db-table-wrap">
+          <table class="db-table">
+            <thead><tr><th>Time</th><th>Sum</th><th>Coin</th><th>Network</th><th>Status</th><th>Memo</th><th>Address</th></tr></thead>
+            <tbody id="dashTxBody"></tbody>
+          </table>
+        </div>
+        <div style="display:flex;justify-content:center">
+          <button class="gradient-btn" style="padding:12px 40px;font-size:15px;border-radius:12px">Request withdraw</button>
+        </div>
+      </div>
+
+      <div id="dash-tab-history" class="dashboard-content" style="display:none">
+        <div style="display:flex;gap:12px">
+          <div style="display:flex;align-items:center;gap:8px;background:var(--secondary);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:13px;color:var(--muted)">
+            📅 <input type="date" id="startDate" style="background:transparent;border:none;outline:none;color:var(--fg);min-width:130px;font-size:13px" />
+          </div>
+          <div style="display:flex;align-items:center;gap:8px;background:var(--secondary);border:1px solid var(--border);border-radius:6px;padding:6px 12px;font-size:13px;color:var(--muted)">
+            📅 <input type="date" id="endDate" style="background:transparent;border:none;outline:none;color:var(--fg);min-width:130px;font-size:13px" />
+          </div>
+        </div>
+        <div class="db-table-wrap">
+          <table class="db-table">
+            <thead><tr><th>ID</th><th>Time</th><th>Fixed</th><th>Profit</th><th>Pair</th></tr></thead>
+            <tbody id="historyBody"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div id="dash-tab-integrate" class="dashboard-content" style="display:none;max-width:560px">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:14px;font-weight:500">API Key:</label>
+          <div style="display:flex;gap:8px">
+            <input readonly type="password" id="apiKeyInput" value="sk-7906c716-5925-4e84-a18d-3a896ad1e4f9" class="api-field" />
+            <button class="gradient-btn" style="padding:10px 20px;border-radius:10px;display:flex;align-items:center;gap:8px;font-size:14px;white-space:nowrap" onclick="toggleApiKey()">👁 Show</button>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <label style="font-size:14px;font-weight:500">Referral Link:</label>
+          <div style="display:flex;gap:8px">
+            <input readonly value="https://swaptrix.io?r=7906c716-5925-4e84-a18d-3a896ad1e4f9" class="api-field" style="font-size:13px" id="refLinkInput" />
+            <button class="gradient-btn" style="padding:10px 20px;border-radius:10px;display:flex;align-items:center;gap:8px;font-size:14px;white-space:nowrap" onclick="copyRefLink()">📋 Copy</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer id="footer">
+  <div class="page-container">
+    <a href="#" class="logo" onclick="showPage('home')">Swaptrix</a>
+    <p>Change 1500+ coins with no limits and no sign-up. Private and secure.</p>
+    <p class="copyright">© Swaptrix, 2024-2026, All rights reserved</p>
+  </div>
+</footer>
+
+<!-- ═══════════════ AUTH MODAL ═══════════════ -->
+<div class="modal-overlay" id="authModal">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3 id="authTitle">Sign In</h3>
+      <button class="modal-close" onclick="closeAuth()">×</button>
+    </div>
+    <form id="authForm" onsubmit="submitAuth(event)">
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="authEmail" placeholder="your@email.com" required />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="authPassword" placeholder="••••••••" required />
+      </div>
+      <div class="form-group" id="confirmGroup" style="display:none">
+        <label>Confirm Password</label>
+        <input type="password" id="authConfirm" placeholder="••••••••" />
+      </div>
+      <button type="submit" class="gradient-btn submit-btn" id="authSubmitBtn">Sign In</button>
+    </form>
+    <p class="auth-switch">
+      <span id="authSwitchText">Don't have an account? </span>
+      <button onclick="switchAuth()" id="authSwitchBtn">Create Account</button>
+    </p>
+  </div>
+</div>
+
+<!-- ═══════════════ COIN MODAL ═══════════════ -->
+<div class="modal-overlay" id="coinModal">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <h3>Select Coin</h3>
+      <button class="modal-close" onclick="closeCoinModal()">×</button>
+    </div>
+    <input type="text" id="coinSearch" placeholder="Search coin (e.g. BTC)..." class="search-input" oninput="filterCoins()" />
+    <div class="coin-list" id="coinList"></div>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
